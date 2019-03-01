@@ -1,0 +1,542 @@
+<script type="text/javascript">
+    RED.nodes.registerType('createsession',{
+        category: 'nexmo',
+        color: '#0099FD',
+        defaults: {
+          creds: {value:"", type:"opentokauth"},
+          mediamode:{default: ""},
+          location:{default: ""},
+          archivemode: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "tokbox.png",
+        label: function() {
+            return this.name||"Create Session";
+        }
+    });
+    
+    
+</script>
+
+<script type="text/x-red" data-template-name="createsession">
+  <div class="form-row">
+       <label for="node-config-input-creds"></i>OpenTok Credentials</label>
+       <input type="text" id="node-input-creds" >
+   </div>
+    
+    <div class="form-row">
+        <label for="node-input-mediamode">Media Mode</label>
+        <select type="text" id="node-input-mediamode" style="width:70%;">
+        <option value="routed">Routed</option>
+        <option value="relayed">Relayed</option>
+         </select>
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-location"><i class="icon-tag"></i>Location {}</label>
+        <input type="text" id="node-input-location" placeholder="IP Address">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-archivemode">Archive Mode</label>
+        <select type="text" id="node-input-archivemode" style="width:70%;">
+        <option value="">None</option>
+        <option value="always">Always</option>
+        <option value="audio">Audio Only</option>
+        <option value="video">Video Only</option>
+         </select>
+    </div>
+        
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="create session">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="createsession">
+    <p>A node that wraps the opentok create sesison</p>
+    
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt><span class="property-type">object</span></dt>
+        <dd> <code>msg.payload</code> can be used for templating values in the node</dd>
+    </dl>
+     <h3>Outputs</h3>
+     <dl class="message-properties">
+         <dt><span class="property-type">string</span></dt>
+         <dd> <code>msg.payload</code> will contain  the sessionId of the created session</dd>
+     </dl>
+
+   
+    
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('generatetoken',{
+        category: 'nexmo',
+        color: '#0099FD',
+        defaults: {
+          creds: {value:"", type:"opentokauth"},
+          sessionid:{default: ''},
+          role:{default: ""},
+          data:{default: ""},
+          expiretime: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "tokbox.png",
+        label: function() {
+            return this.name||"Generate Token";
+        }
+    });
+    
+    
+</script>
+
+<script type="text/x-red" data-template-name="generatetoken">
+  <div class="form-row">
+       <label for="node-config-input-creds"></i>OpenTok Credentials</label>
+       <input type="text" id="node-input-creds" >
+   </div>
+    
+   <div class="form-row">
+       <label for="node-input-sessionid"><i class="icon-tag"></i>Session ID {}</label>
+       <input type="text" id="node-input-sessionid" placeholder="sessionid">
+   </div>
+   
+    <div class="form-row">
+        <label for="node-input-role">Role</label>
+        <select type="text" id="node-input-role" style="width:70%;">
+        <option value="subscriber">Subscriber</option>
+        <option value="publisher">Publisher</option>
+        <option value="moderator">Moderator</option>
+        
+         </select>
+    </div>
+   
+    <div class="form-row">
+        <label for="node-input-data"><i class="icon-tag"></i>Data {}</label>
+        <input type="text" id="node-input-data" placeholder="">
+    </div>   
+    
+    <div class="form-row">
+        <label for="node-input-expiretime"><i class="icon-tag"></i>Expire Time {}</label>
+        <input type="text" id="node-input-expiretime" placeholder="1550142016">
+    </div>    
+
+    
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="generate token">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="generatetoken">
+    <p>A node that wraps the opentok generate token function</p>
+    
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt><span class="property-type">object</span></dt>
+        <dd> <code>msg.payload</code> can be used for templating values in the node</dd>
+    </dl>
+     <h3>Outputs</h3>
+     <dl class="message-properties">
+         <dt><span class="property-type">string</span></dt>
+         <dd> <code>msg.payload</code> will contain the token</dd>
+     </dl>
+
+   
+    
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('startarchive',{
+        category: 'nexmo',
+        color: '#0099FD',
+        defaults: {
+          creds: {value:"", type:"opentokauth"},
+          sessionid:{default: ''},
+          archivename:{default: ""},
+          hasvideo:{default: ""},
+          outputmode: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "tokbox.png",
+        label: function() {
+            return this.name||"Start Archive";
+        }
+    });
+    
+    
+</script>
+
+<script type="text/x-red" data-template-name="startarchive">
+  <div class="form-row">
+       <label for="node-config-input-creds"></i>OpenTok Credentials</label>
+       <input type="text" id="node-input-creds" >
+   </div>
+    
+   <div class="form-row">
+       <label for="node-input-sessionid"><i class="icon-tag"></i>Session ID {}</label>
+       <input type="text" id="node-input-sessionid" placeholder="sessionid">
+   </div>
+   
+   <div class="form-row">
+       <label for="node-input-archivename"><i class="icon-tag"></i>Archive Name {}</label>
+       <input type="text" id="node-input-archivename" placeholder="">
+   </div>  
+   
+    <div class="form-row">
+        <label for="node-input-hasvideo">Archive Mode</label>
+        <select type="text" id="node-input-hasvideo" style="width:70%;">
+        <option value="">Audio & Video</option>
+        <option value="false">Audio Only</option>
+        </select>
+    </div>
+   
+    <div class="form-row">
+        <label for="node-input-hasvideo">Output Mode</label>
+        <select type="text" id="node-input-hasvideo" style="width:70%;">
+        <option value="">Composed</option>
+        <option value="individual">Individual</option>
+        </select>
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="generate token">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="startarchive">
+    <p>A node that wraps the opentok start archive function</p>
+    
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt><span class="property-type">object</span></dt>
+        <dd> <code>msg.payload</code> can be used for templating values in the node</dd>
+    </dl>
+     <h3>Outputs</h3>
+     <dl class="message-properties">
+         <dt><span class="property-type">string</span></dt>
+         <dd> <code>msg.payload</code> will contain the token</dd>
+     </dl>
+</script>
+
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('stoparchive',{
+        category: 'nexmo',
+        color: '#0099FD',
+        defaults: {
+          creds: {value:"", type:"opentokauth"},
+          archiveid:{default: ''}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "tokbox.png",
+        label: function() {
+            return this.name||"Stop Archive";
+        }
+    });
+    
+    
+</script>
+
+<script type="text/x-red" data-template-name="stoparchive">
+  <div class="form-row">
+       <label for="node-config-input-creds"></i>OpenTok Credentials</label>
+       <input type="text" id="node-input-creds" >
+   </div>
+    
+   <div class="form-row">
+       <label for="node-input-archiveid"><i class="icon-tag"></i>Archive ID {}</label>
+       <input type="text" id="node-input-sessionid" placeholder="archiveid">
+   </div>
+    
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="generate token">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="stoparchive">
+    <p>A node that wraps the opentok stop archive function</p>
+    
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt><span class="property-type">object</span></dt>
+        <dd> <code>msg.payload</code> can be used for templating values in the node</dd>
+    </dl>
+     <h3>Outputs</h3>
+     <dl class="message-properties">
+         <dt><span class="property-type">string</span></dt>
+         <dd> <code>msg.payload</code> will contain the token</dd>
+     </dl>
+</script>
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('getarchive',{
+        category: 'nexmo',
+        color: '#0099FD',
+        defaults: {
+          creds: {value:"", type:"opentokauth"},
+          archiveid:{default: ''}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "tokbox.png",
+        label: function() {
+            return this.name||"Get Archive";
+        }
+    });
+    
+    
+</script>
+
+<script type="text/x-red" data-template-name="getarchive">
+  <div class="form-row">
+       <label for="node-config-input-creds"></i>OpenTok Credentials</label>
+       <input type="text" id="node-input-creds" >
+   </div>
+    
+   <div class="form-row">
+       <label for="node-input-archiveid"><i class="icon-tag"></i>Archive ID {}</label>
+       <input type="text" id="node-input-sessionid" placeholder="archiveid">
+   </div>
+    
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="generate token">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="getarchive">
+    <p>A node that wraps the opentok get archive function</p>
+    
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt><span class="property-type">object</span></dt>
+        <dd> <code>msg.payload</code> can be used for templating values in the node</dd>
+    </dl>
+     <h3>Outputs</h3>
+     <dl class="message-properties">
+         <dt><span class="property-type">string</span></dt>
+         <dd> <code>msg.payload</code> will contain the token</dd>
+     </dl>
+</script>
+
+
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('dial',{
+        category: 'nexmo',
+        color: '#0099FD',
+        defaults: {
+          creds: {value:"", type:"opentokauth"},
+          sessionid:{default: ''},
+          token:{default: ""},
+          sipuri:{default: ""},
+          headers:{default: ""},
+          sipuser: {value:""},
+          sippassword: {value:""},
+          secure: {value: false},
+          sipfrom: {value: ""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "tokbox.png",
+        label: function() {
+            return this.name||"Dial SIP Endpoint";
+        }
+    });
+    
+    
+</script>
+
+<script type="text/x-red" data-template-name="dial">
+  <div class="form-row">
+       <label for="node-config-input-creds"></i>OpenTok Credentials</label>
+       <input type="text" id="node-input-creds" >
+   </div>
+    
+   <div class="form-row">
+       <label for="node-input-sessionid"><i class="icon-tag"></i>Session ID {}</label>
+       <input type="text" id="node-input-sessionid" placeholder="sessionid">
+   </div>
+   
+   <div class="form-row">
+       <label for="node-input-token"><i class="icon-tag"></i>Token {}</label>
+       <input type="text" id="node-input-token" placeholder="token">
+   </div>
+   
+   <div class="form-row">
+       <label for="node-input-sipuri"><i class="icon-tag"></i>SIP URI {}</label>
+       <input type="text" id="node-input-sipuri" placeholder="sip:user@sip.example.com">
+   </div>
+   
+   <div class="form-row">
+       <label for="node-input-headers"><i class="icon-tag"></i>Headers {}</label>
+       <input type="text" id="node-input-headers" placeholder="{header : value}">
+   </div>
+   
+   <div class="form-row">
+       <label for="node-input-sipuser"><i class="icon-tag"></i>SIP User {}</label>
+       <input type="text" id="node-input-sipuser" placeholder="username">
+   </div>
+
+   <div class="form-row">
+       <label for="node-input-sippassword"><i class="icon-tag"></i>SIP Password {}</label>
+       <input type="text" id="node-input-sippassword" placeholder="password">
+   </div>
+   
+    <div class="form-row">
+        <label for="node-input-sipfrom"><i class="icon-tag"></i>From {}</label>
+        <input type="text" id="node-input-sipfrom" placeholder="123@example.com">
+    </div>   
+    
+    <div class="form-row">
+          <label for="node-input-secure"><i class="icon-tag"></i>Secure Media</label>
+          <input type="checkbox" id="node-input-secure">
+      </div>
+ 
+    
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="generate token">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="dial">
+    <p>A node that wraps the opentok dial  function</p>
+    
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt><span class="property-type">object</span></dt>
+        <dd> <code>msg.payload</code> can be used for templating values in the node</dd>
+    </dl>
+     <h3>Outputs</h3>
+     <dl class="message-properties">
+         <dt><span class="property-type">string</span></dt>
+         <dd> <code>msg.payload</code> will contain the SIP Interconnect Object</dd>
+     </dl>
+</script>
+
+
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('signal',{
+        category: 'nexmo',
+        color: '#0099FD',
+        defaults: {
+          creds: {value:"", type:"opentokauth"},
+          sessionid:{default: ''},
+          connectionid:{default: ""},
+          payload:{default: ""},
+
+        },
+        inputs:1,
+        outputs:1,
+        icon: "tokbox.png",
+        label: function() {
+            return this.name||"Send Signal";
+        }
+    });
+    
+    
+</script>
+
+<script type="text/x-red" data-template-name="signal">
+  <div class="form-row">
+       <label for="node-config-input-creds"></i>OpenTok Credentials</label>
+       <input type="text" id="node-input-creds" >
+   </div>
+    
+   <div class="form-row">
+       <label for="node-input-sessionid"><i class="icon-tag"></i>Session ID {}</label>
+       <input type="text" id="node-input-sessionid" placeholder="sessionid">
+   </div>
+   
+   <div class="form-row">
+       <label for="node-input-connectionid"><i class="icon-tag"></i>Connection ID {}</label>
+       <input type="text" id="node-input-connectionid" placeholder="connectionid">
+   </div>
+   
+   <div class="form-row">
+       <label for="node-input-payload"><i class="icon-tag"></i>Payload {}</label>
+       <input type="text" id="node-input-payload" placeholder="{}">
+   </div>
+ 
+    
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i>Name</label>
+        <input type="text" id="node-input-name" placeholder="generate token">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="dial">
+    <p>A node that wraps the opentok signal function</p>
+    
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt><span class="property-type">object</span></dt>
+        <dd> <code>msg.payload</code> can be used for templating values in the node</dd>
+    </dl>
+     <h3>Outputs</h3>
+     <dl class="message-properties">
+         <dt><span class="property-type">string</span></dt>
+         <dd> <code>msg.payload</code> will contain the payload that was sent</dd>
+     </dl>
+</script>
+
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('opentokauth',{
+        category: 'config',
+        credentials: {
+          apikey: {type:"text"},
+          apisecret: {type:"text"}
+        },
+        label: function() {
+            return this.apikey;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="opentokauth">
+  <div class="form-row"></
+      <label for="node-config-input-apikey">API Key</label>
+      <input type="text" id="node-config-input-apikey" placeholder="OpenTok API Key">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-config-input-apisecret">API Secret</label>
+      <input type="text" id="node-config-input-apisecret" placeholder="OpenTok API Secret">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="opentokauth">
+   <p>Creates a new OpenTok Auth node </p>
+   <h3>Details</h3>
+   <p>Enter your api key and secret</p>
+</script>

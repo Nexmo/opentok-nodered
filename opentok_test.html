@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> OpenTok Node-RED Sample </title>
+    <style type="text/css" media="screen">    
+    body, html {
+        background-color: gray;
+        height: 100%;
+    }
+    #videos {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #subscriber {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+    }
+    #publisher {
+        position: absolute;
+        width: 360px;
+        height: 240px;
+        bottom: 10px;
+        left: 10px;
+        z-index: 100;
+        border: 3px solid white;
+        border-radius: 3px;
+    }
+   #toast {
+     visibility: hidden; /* Hidden by default. Visible on click */
+     min-width: 20px; /* Set a default minimum width */
+     margin-left: -10px; /* Divide value of min-width by 2 */
+     background-color: #333; /* Black background color */
+     color: #fff; /* White text color */
+     text-align: center; /* Centered text */
+     border-radius: 2px; /* Rounded borders */
+     padding: 16px; /* Padding */
+     position: fixed; /* Sit on top of the screen */
+     z-index: 20; /* Add a z-index if needed */
+     left: 50%; /* Center the snackbar */
+     bottom: 30px; /* 30px from the bottom */
+   }
+
+   #toast.show {
+     visibility: visible; /* Show the snackbar */
+     /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+     However, delay the fade out process for 2.5 seconds */
+     -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+     animation: fadein 0.5s, fadeout 0.5s 2.5s;
+   }
+
+   @-webkit-keyframes fadein {
+     from {bottom: 0; opacity: 0;}
+     to {bottom: 30px; opacity: 1;}
+   }
+
+   @keyframes fadein {
+     from {bottom: 0; opacity: 0;}
+     to {bottom: 30px; opacity: 1;}
+   }
+
+   @-webkit-keyframes fadeout {
+     from {bottom: 30px; opacity: 1;}
+     to {bottom: 0; opacity: 0;}
+   }
+
+   @keyframes fadeout {
+     from {bottom: 30px; opacity: 1;}
+     to {bottom: 0; opacity: 0;}
+   } 
+    </style>
+    <script src="https://static.opentok.com/v2.15.7/js/opentok.min.js"></script>
+    <!-- Polyfill for fetch API so that we can fetch the sessionId and token in IE11 -->
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js" charset="utf-8"></script>
+</head>
+
+<body>
+
+    <div id="videos">
+        <div id="subscriber"></div>
+        <div id="publisher"></div>
+    </div>
+    <div id="toast"></div> 
+    <script>
+      var SERVER_BASE_URL = window.location.origin ;
+      var apiKey;
+      var sessionId;
+      var session;
+      var token;
+
+      function handleError(error) {
+        if (error) {
+          console.error(error);
+        }
+      }
+
+      function initializeSession() {
+        session = OT.initSession(apiKey, sessionId);
+
+        // Subscribe to a newly created stream
+        session.on('streamCreated', function streamCreated(event) {
+          console.log("Stream Created")
+          var subscriberOptions = {
+            insertMode: 'append',
+            width: '100%',
+            height: '100%'
+          };
+          session.subscribe(event.stream, 'subscriber', subscriberOptions, handleError);
+        });
+
+        session.on('sessionDisconnected', function sessionDisconnected(event) {
+          console.log('You were disconnected from the session.', event.reason);
+        });
+        
+        session.on("signal", function(event) {
+              console.log(event);
+              toast(event.data);
+            });
+            
+        // initialize the publisher
+        var publisherOptions = {
+          insertMode: 'append',
+          width: '100%',
+          height: '100%'
+        };
+        var publisher = OT.initPublisher('publisher', publisherOptions, handleError);
+
+        // Connect to the session
+        session.connect(token, function callback(error) {
+          if (error) {
+            handleError(error);
+          } else {
+            // If the connection is successful, publish the publisher to the session
+            session.publish(publisher, handleError);
+          }
+        });
+      }
+      // See the config.js file.
+      if (SERVER_BASE_URL) {
+        // Make an Ajax request to get the OpenTok API key, session ID, and token from the server
+        fetch(SERVER_BASE_URL + '/session').then(function fetch(res) {
+          return res.json();
+        }).then(function fetchJson(json) {
+          apiKey = json.apiKey;
+          sessionId = json.sessionId;
+          token = json.token;
+
+          initializeSession();
+        }).catch(function catchErr(error) {
+          handleError(error);
+          alert('Failed to get opentok sessionId and token. Make sure you have updated the config.js file.');
+        });
+      }
+      
+      function toast(message) {
+        // Get the tost DIV
+        var x = document.getElementById("toast");
+        //Set the content of the toast
+        x.innerHTML=message
+        // Add the "show" class to DIV
+        x.className = "show";
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+      } 
+    </script>
+</body>
+</html>

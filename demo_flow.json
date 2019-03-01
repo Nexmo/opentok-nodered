@@ -1,0 +1,359 @@
+[
+    {
+        "id": "1f35415.50107bf",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "d5c0d529.ab722",
+        "type": "http in",
+        "z": "1f35415.50107bf",
+        "name": "",
+        "url": "/session",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 93.5,
+        "y": 200,
+        "wires": [
+            [
+                "4e8be125.80af6"
+            ]
+        ]
+    },
+    {
+        "id": "b2a59af3.69b3e",
+        "type": "inject",
+        "z": "1f35415.50107bf",
+        "name": "New Session",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 129.5,
+        "y": 64,
+        "wires": [
+            [
+                "3944a5e8.a39532"
+            ]
+        ]
+    },
+    {
+        "id": "c168bb45.5adf3",
+        "type": "change",
+        "z": "1f35415.50107bf",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "sessionid",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 335.5,
+        "y": 165,
+        "wires": [
+            [
+                "ff8f6f28.a81d8"
+            ]
+        ]
+    },
+    {
+        "id": "4e8be125.80af6",
+        "type": "generatetoken",
+        "z": "1f35415.50107bf",
+        "creds": "4a91e914.5d617",
+        "sessionid": "{{flow.sessionid}}",
+        "role": "publisher",
+        "data": "",
+        "expiretime": "",
+        "x": 204.5,
+        "y": 252,
+        "wires": [
+            [
+                "79b4e687.deecf"
+            ]
+        ]
+    },
+    {
+        "id": "79b4e687.deecf",
+        "type": "template",
+        "z": "1f35415.50107bf",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n\"apiKey\" : \"[OPENTOK API KEY]\",\n\"sessionId\" : \"{{flow.sessionid}}\",\n\"token\" : \"{{{payload}}}\"\n}",
+        "output": "str",
+        "x": 298.5,
+        "y": 305,
+        "wires": [
+            [
+                "4759678f.0b8e7"
+            ]
+        ]
+    },
+    {
+        "id": "21915e60.740092",
+        "type": "http response",
+        "z": "1f35415.50107bf",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 559.5,
+        "y": 347,
+        "wires": []
+    },
+    {
+        "id": "4759678f.0b8e7",
+        "type": "json",
+        "z": "1f35415.50107bf",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 376.5,
+        "y": 350,
+        "wires": [
+            [
+                "21915e60.740092",
+                "ff8f6f28.a81d8"
+            ]
+        ]
+    },
+    {
+        "id": "ff8f6f28.a81d8",
+        "type": "debug",
+        "z": "1f35415.50107bf",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 585.5,
+        "y": 193,
+        "wires": []
+    },
+    {
+        "id": "ca20278c.738ca8",
+        "type": "file in",
+        "z": "1f35415.50107bf",
+        "name": "",
+        "filename": "/PATH/TO/opentok_test.html",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "x": 359.5,
+        "y": 879,
+        "wires": [
+            [
+                "f5e5a44d.73a4c8"
+            ]
+        ]
+    },
+    {
+        "id": "c723bb20.1006e8",
+        "type": "http in",
+        "z": "1f35415.50107bf",
+        "name": "",
+        "url": "/video",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 89.5,
+        "y": 879,
+        "wires": [
+            [
+                "ca20278c.738ca8"
+            ]
+        ]
+    },
+    {
+        "id": "f5e5a44d.73a4c8",
+        "type": "http response",
+        "z": "1f35415.50107bf",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 607.5,
+        "y": 878,
+        "wires": []
+    },
+    {
+        "id": "e579a916.28df88",
+        "type": "generatetoken",
+        "z": "1f35415.50107bf",
+        "creds": "4a91e914.5d617",
+        "sessionid": "{{flow.sessionid}}",
+        "role": "publisher",
+        "data": "",
+        "expiretime": "",
+        "x": 263.5,
+        "y": 642,
+        "wires": [
+            [
+                "8a2b0ac9.f70aa"
+            ]
+        ]
+    },
+    {
+        "id": "f51707b.05406f8",
+        "type": "debug",
+        "z": "1f35415.50107bf",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 570.5,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "ccdc6d63.290f68",
+        "type": "inject",
+        "z": "1f35415.50107bf",
+        "name": "",
+        "topic": "",
+        "payload": "call",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 91.5,
+        "y": 612,
+        "wires": [
+            [
+                "e579a916.28df88"
+            ]
+        ]
+    },
+    {
+        "id": "3944a5e8.a39532",
+        "type": "createsession",
+        "z": "1f35415.50107bf",
+        "creds": "4a91e914.5d617",
+        "mediamode": "routed",
+        "location": "",
+        "archivemode": "",
+        "x": 256.5,
+        "y": 118,
+        "wires": [
+            [
+                "c168bb45.5adf3"
+            ]
+        ]
+    },
+    {
+        "id": "8a2b0ac9.f70aa",
+        "type": "dial",
+        "z": "1f35415.50107bf",
+        "creds": "4a91e914.5d617",
+        "sessionid": "{{flow.sessionid}}",
+        "token": "{{msg.payload}}",
+        "sipuri": "sip:[DESTNUMBER]@sip.nexmo.com",
+        "headers": "",
+        "sipuser": "[NEXMO API KEY}",
+        "sippassword": "[NEXMO API SECRET}",
+        "secure": false,
+        "sipfrom": "[NEXMO NUMBER}@sip.nexmo.com",
+        "x": 365.5,
+        "y": 720,
+        "wires": [
+            [
+                "f51707b.05406f8"
+            ]
+        ]
+    },
+    {
+        "id": "db0c2075.f448e",
+        "type": "signal",
+        "z": "1f35415.50107bf",
+        "creds": "4a91e914.5d617",
+        "sessionid": "{{flow.sessionid}}",
+        "connectionid": "",
+        "payload": "{\"data\" : \"{{msg.payload}}\" }",
+        "x": 323.5,
+        "y": 477,
+        "wires": [
+            [
+                "1e9b8ea.4e40e71"
+            ]
+        ]
+    },
+    {
+        "id": "289d4304.d9abf4",
+        "type": "inject",
+        "z": "1f35415.50107bf",
+        "name": "",
+        "topic": "",
+        "payload": "🐶",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 94.5,
+        "y": 506,
+        "wires": [
+            [
+                "db0c2075.f448e"
+            ]
+        ]
+    },
+    {
+        "id": "1e9b8ea.4e40e71",
+        "type": "debug",
+        "z": "1f35415.50107bf",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 573.5,
+        "y": 481,
+        "wires": []
+    },
+    {
+        "id": "72dcd6f6.9e90f8",
+        "type": "inject",
+        "z": "1f35415.50107bf",
+        "name": "",
+        "topic": "",
+        "payload": "Hello World",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 108,
+        "y": 431,
+        "wires": [
+            [
+                "db0c2075.f448e"
+            ]
+        ]
+    },
+    {
+        "id": "4a91e914.5d617",
+        "type": "opentokauth",
+        "z": ""
+    }
+]
