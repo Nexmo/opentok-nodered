@@ -1,5 +1,6 @@
 var OpenTok = require('opentok')
 var mustache = require("mustache")
+mustache.escape = function(text) {return text;};
 
 module.exports = function(RED) {
   
@@ -136,7 +137,6 @@ module.exports = function(RED) {
         this.sessionid = mustache.render(config.sessionid, data)
         this.connectionid = mustache.render(config.connectionid, data)
         this.payload = JSON.parse(mustache.render(config.payload, data))
-        console.log(this,)
         var opentok = new OpenTok(this.creds.credentials.apikey, this.creds.credentials.apisecret);
         opentok.signal(this.sessionid, this.connectionid, this.payload, function(err, response) {
           if (err) return console.log(err)
