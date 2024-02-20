@@ -17,6 +17,6 @@
     },
     "dependencies": {
       "mustache": "^2.3.2",
-      "opentok": "^2.8.0"
+      "opentok": "^2.17.0"
     }
 }
